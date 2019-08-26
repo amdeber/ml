@@ -72,15 +72,7 @@ public class WeatherCreatorService implements IWeatherCreatorService {
 		List<DayWeather> resutlDays = new ArrayList<>();
 		planets.forEach(p -> {
 			IntStream.range(0, Integer.valueOf(days.toString())).forEach(day -> {
-				Long dayLong = Long.valueOf(day);
-				DayWeather dayWeather = dayWeatherExist(dayLong) ? dayWeatherDao.getFindByDay(dayLong)
-						: createDayWeather(dayLong);
-				Point point = PointFactory.createPoint(p, dayWeather);
-				List<Point> points = dayWeather.getPoints() != null ? dayWeather.getPoints() : new ArrayList<>();
-				dayWeather.setPoints(points);
-				dayWeather.getPoints().add(point);
-				pointDao.createFlush(point);
-				dayWeatherDao.updateFlush(dayWeather);
+				createDayAndTheirPoints(p, day);
 				LOGGER.debug("Point create");
 			});
 		});
@@ -88,18 +80,34 @@ public class WeatherCreatorService implements IWeatherCreatorService {
 		LOGGER.info("Finish create point. Total point: " + pointDao.countFindAll());
 	}
 
+	private void createDayAndTheirPoints(Planet p, int day) {
+		Long dayLong = Long.valueOf(day);
+		DayWeather dayWeather = dayWeatherExist(dayLong) ? dayWeatherDao.getFindByDay(dayLong)
+				: createDayWeather(dayLong);
+		Point point = PointFactory.createPoint(p, dayWeather);
+		List<Point> points = dayWeather.getPoints() != null ? dayWeather.getPoints() : new ArrayList<>();
+		dayWeather.setPoints(points);
+		dayWeather.getPoints().add(point);
+		pointDao.createFlush(point);
+		dayWeatherDao.updateFlush(dayWeather);
+	}
+
 	private void setInitialWeatherDay() {
 		List<DayWeather> days = dayWeatherDao.findAll();
 		days.forEach(wd -> {
-			Map<String, Point> map = wd.getPoints().stream()
-					.collect(Collectors.toMap(Point::getNamePlanet, Point -> Point));
-			setWeaterToDay(wd, map.get(PlanetFactory.FERENGI), map.get(PlanetFactory.BETASOIDE),
-					map.get(PlanetFactory.VULCANO));
-			dayWeatherDao.updateFlush(wd);
-			LOGGER.debug("Point update");
+			setWeatherForOneDay(wd);
 		});
 		LOGGER.info("Finish create days with weather. Total days: " + days.size());
 		LOGGER.info("Finished initialization process");
+	}
+
+	private void setWeatherForOneDay(DayWeather wd) {
+		Map<String, Point> map = wd.getPoints().stream()
+				.collect(Collectors.toMap(Point::getNamePlanet, Point -> Point));
+		setWeaterToDay(wd, map.get(PlanetFactory.FERENGI), map.get(PlanetFactory.BETASOIDE),
+				map.get(PlanetFactory.VULCANO));
+		dayWeatherDao.updateFlush(wd);
+		LOGGER.debug("Point update");
 	}
 
 	private Long getInicialDays() {
