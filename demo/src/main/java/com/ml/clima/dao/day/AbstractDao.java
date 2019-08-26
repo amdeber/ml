@@ -1,4 +1,4 @@
-package com.ml.clima.dao.date;
+package com.ml.clima.dao.day;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -5,7 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ml.clima.dao.date.DayWeatherDao;
+import com.ml.clima.dao.day.DayWeatherDao;
 import com.ml.clima.domain.WeatherRepository;
 import com.ml.clima.model.DayWeather;
 import com.ml.clima.services.interfaces.IWeatherService;

@@ -14,7 +14,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
-import com.ml.clima.dao.date.DayWeatherDao;
+import com.ml.clima.dao.day.DayWeatherDao;
 import com.ml.clima.dao.planet.PlanetDao;
 import com.ml.clima.dao.point.PointDao;
 import com.ml.clima.factories.PlanetFactory;

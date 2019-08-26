@@ -1,4 +1,4 @@
-package com.ml.clima.dao.date;
+package com.ml.clima.dao.day;
 
 import java.util.List;
 
