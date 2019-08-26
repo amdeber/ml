@@ -1,0 +1,75 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@amdeber 
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
+
+ 
+7,936
+3,332
+41,197 26,543 spring-projects/spring-boot
+ Code  Issues 376  Pull requests 23  Projects 0  Wiki  Security  Insights
+spring-boot/.gitignore
+@mbhave mbhave Remove setting.xml from .gitignore
+74912ee on 26 Jun
+@dsyer @philwebb @gregturn @isopov @rajadilipkolli @mbhave @izeye @wilkinsona
+40 lines (39 sloc)  394 Bytes
+    
+*#
+*.iml
+*.ipr
+*.iws
+*.jar
+*.sw?
+*~
+.#*
+.*.md.html
+.DS_Store
+.classpath
+.factorypath
+.gradle
+.idea
+.metadata
+.project
+.recommenders
+.settings
+.springBeans
+/build
+/code
+MANIFEST.MF
+_site/
+activemq-data
+bin
+build
+build.log
+dependency-reduced-pom.xml
+dump.rdb
+interpolated*.xml
+lib/
+manifest.yml
+overridedb.*
+target
+transaction-logs
+.flattened-pom.xml
+secrets.yml
+.gradletasknamecache
+.sts4-cache
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
