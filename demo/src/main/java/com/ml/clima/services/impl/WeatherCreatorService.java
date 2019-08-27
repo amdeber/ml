@@ -70,14 +70,18 @@ public class WeatherCreatorService implements IWeatherCreatorService {
 		});
 		Long days = getInicialDays();
 		List<DayWeather> resutlDays = new ArrayList<>();
+		createDayForPlanets(planets, days);
+		LOGGER.info("Finish create days without weather. Total days: " + days);
+		LOGGER.info("Finish create point. Total point: " + pointDao.countFindAll());
+	}
+
+	private void createDayForPlanets(List<Planet> planets, Long days) {
 		planets.forEach(p -> {
 			IntStream.range(0, Integer.valueOf(days.toString())).forEach(day -> {
 				createDayAndTheirPoints(p, day);
 				LOGGER.debug("Point create");
 			});
 		});
-		LOGGER.info("Finish create days without weather. Total days: " + days);
-		LOGGER.info("Finish create point. Total point: " + pointDao.countFindAll());
 	}
 
 	private void createDayAndTheirPoints(Planet p, int day) {
@@ -123,5 +127,16 @@ public class WeatherCreatorService implements IWeatherCreatorService {
 		DayWeather dw = new DayWeather(day);
 		return dayWeatherDao.createFlush(dw);
 	}
+	
+	public void createWeatherForSpecificDay(){
+		Long lastDay = dayWeatherDao.getMaxDay();
+		List<Planet> planets = planetDao.findAll();
+		createDayForPlanets(planets, lastDay);
+		DayWeather dw = dayWeatherDao.getFindByDay(lastDay + 1);
+		setWeatherForOneDay(dw);
+		LOGGER.info("Weather created for day: " + dw.getDay().toString());
+	}
+	
+	
 
 }

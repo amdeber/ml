@@ -12,24 +12,30 @@ import com.ml.clima.model.DayWeather;
 public class DayWeatherDao extends AbstractDao<DayWeather> {
 
 	@Autowired
-	private DayWeatherJpaDao repositorio;
+	private DayWeatherJpaDao repository;
 
 	@Override
 	protected JpaRepository<DayWeather, Long> getRepositorio() {
-		return repositorio;
+		return repository;
 	}
 
 	public DayWeather getFindByDay(Long day){
-		return repositorio.findByDay(day);
+		return repository.findByDay(day);
 	}
 	
 	
 	public Integer countByDay(Long day){
-		return repositorio.countByDay(day);
+		return repository.countByDay(day);
 	}
 
 	public List<DayWeather> findAll() {
-		return repositorio.findAll();
+		return repository.findAll();
 	}
+	
+	public Long getMaxDay(){
+		return repository.getMaxDay();
+	}
+	
+	
 	
 }
