@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import com.ml.clima.dao.day.AbstractDao;
-import com.ml.clima.model.DayWeather;
+import com.ml.clima.dao.AbstractDao;
 import com.ml.clima.model.Planet;
 
 @Service

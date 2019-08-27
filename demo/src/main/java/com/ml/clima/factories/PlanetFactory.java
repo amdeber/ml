@@ -2,10 +2,7 @@ package com.ml.clima.factories;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.ml.clima.model.Planet;
-import com.ml.clima.model.Point;
-import com.ml.clima.utils.CalculationUtils;
 
 public class PlanetFactory {
 	

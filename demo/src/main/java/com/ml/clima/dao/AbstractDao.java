@@ -1,4 +1,4 @@
-package com.ml.clima.dao.day;
+package com.ml.clima.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -6,21 +6,21 @@ public abstract class AbstractDao<T> {
 
 	protected abstract JpaRepository<T, Long> getRepositorio();
 
-	public T crear(T entity) {
+	public T create(T entity) {
 		this.beforeSave(entity);
 		entity = getRepositorio().save(entity);
 		this.afterSave(entity);
 		return entity;
 	}
 
-	public T actualizar(T entity) {
+	public T update(T entity) {
 		this.beforeUpdate(entity);
 		entity = getRepositorio().save(entity);
 		this.afterUpdate(entity);
 		return entity;
 	}
 
-	public void borrar(T entity) {
+	public void delete(T entity) {
 		this.beforeDelete(entity);
 		getRepositorio().delete(entity);
 		this.afterDelete(entity);

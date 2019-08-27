@@ -10,10 +10,9 @@ import java.util.stream.IntStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.ml.clima.constants.WeatherContants;
 import com.ml.clima.dao.day.DayWeatherDao;
 import com.ml.clima.dao.planet.PlanetDao;
 import com.ml.clima.dao.point.PointDao;
@@ -51,11 +50,12 @@ public class WeatherCreatorService implements IWeatherCreatorService {
 
 	private void setWeaterToDay(DayWeather dateWeather, Point ferengiPoint, Point betasoidePoint,
 			Point vulcanoPoint) {
-		if (CalculationUtils.isAligned(ferengiPoint, betasoidePoint, vulcanoPoint, getOriginPoint())) {
-			dateWeather.setWeather("SEQUIA");
-		}else {
-			dateWeather.setWeather("LLUVIA");
-		}
+		if (CalculationUtils.isAligned(ferengiPoint, betasoidePoint, vulcanoPoint, getOriginPoint())) 
+			dateWeather.setWeather(WeatherContants.DROUGHT);
+		else if (CalculationUtils.isAlignedWithoutSun(ferengiPoint, betasoidePoint, vulcanoPoint, getOriginPoint()))
+			dateWeather.setWeather(WeatherContants.RAIN);
+		else
+			dateWeather.setWeather(WeatherContants.OPTIMAL);
 	}
 
 	private Point getOriginPoint() {
@@ -69,7 +69,6 @@ public class WeatherCreatorService implements IWeatherCreatorService {
 			planetDao.createFlush(p);
 		});
 		Long days = getInicialDays();
-		List<DayWeather> resutlDays = new ArrayList<>();
 		createDayForPlanets(planets, days);
 		LOGGER.info("Finish create days without weather. Total days: " + days);
 		LOGGER.info("Finish create point. Total point: " + pointDao.countFindAll());
