@@ -7,25 +7,29 @@ import javax.persistence.Entity;
 public class Url {
 
 	@Column(nullable = false)
-	private String urlShort;
+	private String shortUrl;
 	
 	@Column(nullable = false)
-	private String urlLong;
+	private String longUrl;
 
-	public String getUrlShort() {
-		return urlShort;
+	public String getShortUrl() {
+		return shortUrl;
 	}
 
-	public void setUrlShort(String urlShort) {
-		this.urlShort = urlShort;
+	public Url(String longUrl, String shortUrl) {
+		this.longUrl = longUrl;
+		this.shortUrl = shortUrl;
+	}
+	public void setShortUrl(String urlShort) {
+		this.shortUrl = urlShort;
 	}
 
-	public String getUrlLong() {
-		return urlLong;
+	public String getLongUrl() {
+		return longUrl;
 	}
 
-	public void setUrlLong(String urlLong) {
-		this.urlLong = urlLong;
+	public void setLongUrl(String urlLong) {
+		this.longUrl = urlLong;
 	}
 	
 }

@@ -1,15 +1,12 @@
 package com.ml.clima.mapper;
 
-import com.ml.clima.dto.DayWeatherDto;
-import com.ml.clima.model.DayWeather;
+import com.ml.clima.dto.UrlDto;
+import com.ml.clima.model.Url;
 
 public class UrlMapper {
 	
-	public static DayWeatherDto entityToDto(DayWeather dayWeather) {
-		DayWeatherDto dto = new DayWeatherDto();
-		dto.setDay(dayWeather.getDay());
-		dto.setWeather(dayWeather.getWeather());
-		return dto;
+	public static UrlDto entityToDto(Url url) {
+		return new UrlDto(url.getLongUrl(), url.getShortUrl());
 	}
 	
 

@@ -3,17 +3,13 @@ package com.ml.clima.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ml.clima.constants.WeatherContants;
-import com.ml.clima.dao.day.DayWeatherDao;
 import com.ml.clima.dao.url.UrlDao;
-import com.ml.clima.domain.UrlRepository;
-import com.ml.clima.domain.WeatherRepository;
 import com.ml.clima.dto.UrlDto;
-import com.ml.clima.dto.WeatherResultDto;
-import com.ml.clima.model.DayWeather;
+import com.ml.clima.exception.ShortUrlNotFoundException;
+import com.ml.clima.mapper.UrlMapper;
 import com.ml.clima.model.Url;
 import com.ml.clima.services.interfaces.IUrlService;
-import com.ml.clima.services.interfaces.IWeatherService;
+import com.ml.clima.utils.UrlUtils;
 
 @Service
 public class UrlService implements IUrlService {
@@ -22,15 +18,21 @@ public class UrlService implements IUrlService {
 	UrlDao urlDao;
 
 	@Override
-	public UrlDto getLongUrl(String shortUrl) {
-		Url url = urlDao.getFindByShortUrl(shortUrl);
-		return new UrlDto(url.getUrlLong(), url.getUrlShort());
+	public Url getLongUrl(String shortUrl) {
+		Url urlExist =  urlDao.getFindByShortUrl(shortUrl); 
+		return urlDao.getFindByShortUrl(shortUrl) != null ? urlExist: null;
 	}
 
 	@Override
-	public UrlDto getShortUrl(String longUrl) {
-		Url url = urlDao.getFindByLongUrl(longUrl);
-		return new UrlDto(url.getUrlLong(), url.getUrlShort());
+	public Url getShortUrl(String longUrl) {
+		Url urlExist =  urlDao.getFindByLongUrl(longUrl); 
+		if (urlExist != null) {
+			return urlExist;
+		}else {
+			String shortUrl = UrlUtils.getInstance().transformLongToShorUrl(longUrl);
+			Url urlNew = urlDao.create(new Url(longUrl, shortUrl));
+			return urlNew;
+		}
 	}
 
 
