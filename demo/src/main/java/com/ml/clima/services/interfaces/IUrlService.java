@@ -8,4 +8,6 @@ public interface IUrlService {
 
 	Url getShortUrl(String longUrl);
 
+	Long deleteShortUrl(String shortUrl);
+
 }

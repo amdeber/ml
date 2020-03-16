@@ -1,22 +1,21 @@
 package com.ml.clima.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.ml.clima.dto.DayWeatherDto;
 import com.ml.clima.dto.UrlDto;
-import com.ml.clima.dto.WeatherResultDto;
-import com.ml.clima.mapper.DayWeatherMapper;
+import com.ml.clima.exception.ShortUrlNotFoundException;
+import com.ml.clima.exception.URLNoValidException;
+import com.ml.clima.exception.UrlNullPointerException;
 import com.ml.clima.mapper.UrlMapper;
 import com.ml.clima.model.Url;
 import com.ml.clima.services.interfaces.IUrlService;
+import com.ml.clima.utils.UrlUtils;
 
 @RestController
 @RequestMapping("/url")
@@ -25,19 +24,46 @@ public class UrlController {
     @Autowired
     IUrlService urlService;
     
-    @RequestMapping(value="/long/{longUrl}", method = RequestMethod.GET)
-    public UrlDto getLongUrl(@PathVariable("shortUrl") String url) {
+    @RequestMapping(value="/long", method = RequestMethod.POST)
+    public UrlDto getLongUrl(@RequestBody String url, HttpServletRequest request) {
+    	urlParamsIsNull(url);
+    	urlNotValid(url);
     	Url urlExist = urlService.getLongUrl(url);
-    	if (urlExist == null)
-    		throw new ResponseStatusException(
-    	 	           HttpStatus.NOT_FOUND, "Short Url Not Found", new Exception());  	
-    	return UrlMapper.entityToDto(urlService.getLongUrl(url));
+    	urlNoExistInDB(urlExist, url);
+    	return UrlMapper.entityToDto(urlExist);
     }
 	
-	@RequestMapping(value="/short/{longUrl}", method = RequestMethod.GET)
-    public UrlDto getShortUrl(@PathVariable("longUrl") Long day) {
-        return null; //weatherService.getCountByWeathert();
+	@RequestMapping(value="/short", method = RequestMethod.POST)
+    public UrlDto getShortUrl(@RequestBody String url, HttpServletRequest request) {
+		urlParamsIsNull(url);	
+		urlNotValid(url);
+        return UrlMapper.entityToDto(urlService.getShortUrl(url));
     }
+	
+	@RequestMapping(value="/delete", method = RequestMethod.DELETE)
+    public String deleteFromShortUrl(@RequestBody String url, HttpServletRequest request) {
+		urlParamsIsNull(url);	
+		urlNotValid(url);
+		Url urlExist = urlService.getLongUrl(url);
+		urlNoExistInDB(urlExist, url);
+        return urlService.deleteShortUrl(url) > 0 ? "URL deleted" : "Url not deleted!";
+    }
+	
+	private void urlParamsIsNull(String url) {
+		if (url == null)
+    		throw new UrlNullPointerException(); 
+	}
+	
+	private void urlNotValid(String url) {
+		if (!UrlUtils.getInstance().isUrlValid(url))
+    		throw new URLNoValidException(url); 
+	}
+	
+	private void urlNoExistInDB(Url urlDB, String url) {
+		if (urlDB == null)
+    		throw new ShortUrlNotFoundException(url); 
+	}
+	
 	
 	
 }

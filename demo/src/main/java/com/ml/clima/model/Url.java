@@ -2,10 +2,17 @@ package com.ml.clima.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Url {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
 	@Column(nullable = false)
 	private String shortUrl;
 	
@@ -16,6 +23,9 @@ public class Url {
 		return shortUrl;
 	}
 
+	public Url() {
+	}
+	
 	public Url(String longUrl, String shortUrl) {
 		this.longUrl = longUrl;
 		this.shortUrl = shortUrl;

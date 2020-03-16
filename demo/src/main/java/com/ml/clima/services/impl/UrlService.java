@@ -2,6 +2,7 @@ package com.ml.clima.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ml.clima.dao.url.UrlDao;
 import com.ml.clima.dto.UrlDto;
@@ -35,5 +36,10 @@ public class UrlService implements IUrlService {
 		}
 	}
 
+	@Override
+	@Transactional
+	public Long deleteShortUrl(String shortUrl) {
+		return urlDao.deleteByShortUrl(shortUrl);
+	}
 
 }

@@ -19,12 +19,6 @@ public abstract class AbstractDao<T> {
 		this.afterUpdate(entity);
 		return entity;
 	}
-
-	public void delete(T entity) {
-		this.beforeDelete(entity);
-		getRepositorio().delete(entity);
-		this.afterDelete(entity);
-	}
 	
 	
 	public T createFlush(T entity) {

@@ -27,5 +27,8 @@ public class UrlDao extends AbstractDao<Url> {
 		return repository.findByShortUrl(shortUrl);
 	}
 	
+	public Long deleteByShortUrl(String shortUrl) {
+		return repository.deleteByShortUrl(shortUrl);
+	}
 	
 }

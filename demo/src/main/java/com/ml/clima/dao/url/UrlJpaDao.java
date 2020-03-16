@@ -12,5 +12,7 @@ public interface UrlJpaDao extends JpaRepository<Url, Long>{
 	Url findByShortUrl(String shortUrl);
 	
 	Url findByLongUrl(String longUrl);
+	
+	Long deleteByShortUrl(String shortUrl);
 
 }

@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class ShortUrlNotFoundException extends RuntimeException {
+public class URLNoValidException extends RuntimeException {
 
-	public ShortUrlNotFoundException(String url) {
-		super("Short url not found : " + url);
+	public URLNoValidException(String url) {
+		super("URL is not valid : " + url);
 	}
 
 }
