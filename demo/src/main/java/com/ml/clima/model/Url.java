@@ -9,6 +9,14 @@ import javax.persistence.Id;
 @Entity
 public class Url {
 
+	public Long getClic() {
+		return clic;
+	}
+
+	public void setClic(Long clic) {
+		this.clic = clic;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -18,6 +26,9 @@ public class Url {
 	
 	@Column(nullable = false)
 	private String longUrl;
+	
+	@Column(nullable = false)
+	private Long clic = Long.valueOf(0);
 
 	public String getShortUrl() {
 		return shortUrl;

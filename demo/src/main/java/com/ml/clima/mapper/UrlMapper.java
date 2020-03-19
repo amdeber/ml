@@ -6,7 +6,7 @@ import com.ml.clima.model.Url;
 public class UrlMapper {
 	
 	public static UrlDto entityToDto(Url url) {
-		return new UrlDto(url.getLongUrl(), url.getShortUrl());
+		return new UrlDto(url.getLongUrl(), url.getShortUrl(), url.getClic());
 	}
 	
 

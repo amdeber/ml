@@ -23,6 +23,23 @@ public class UrlService implements IUrlService {
 		Url urlExist =  urlDao.getFindByShortUrl(shortUrl); 
 		return urlDao.getFindByShortUrl(shortUrl) != null ? urlExist: null;
 	}
+	
+	@Override
+	public Url getLongUrlWithCounter(String shortUrl) {
+		Url urlExist =  urlDao.getFindByShortUrl(shortUrl); 
+		setClicCounter(urlExist);	
+		urlDao.update(urlExist);	
+		return urlDao.getFindByShortUrl(shortUrl) != null ? urlExist: null;
+	}
+
+	private void setClicCounter(Url urlExist) {
+		if (urlExist != null) {
+			if (urlExist.getClic() > 0)
+				urlExist.setClic(urlExist.getClic() + 1); 
+			else 
+				urlExist.setClic(Long.valueOf(1));
+		}
+	}
 
 	@Override
 	public Url getShortUrl(String longUrl) {

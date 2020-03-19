@@ -10,4 +10,6 @@ public interface IUrlService {
 
 	Long deleteShortUrl(String shortUrl);
 
+	Url getLongUrlWithCounter(String shortUrl);
+
 }

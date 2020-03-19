@@ -7,11 +7,22 @@ public class UrlDto {
 	
 	private String urlLong;
 	
-	public UrlDto(String urlLong, String urlShort) {
-		this.setUrlLong(urlLong);
-		this.setUrlShort(urlShort);
+	private Long clic;
+	
+	public UrlDto(String urlLong, String urlShort, Long clic) {
+		this.urlLong = urlLong;
+		this.urlShort = urlShort;
+		this.clic = clic;
 	}
 	
+	public Long getClic() {
+		return clic;
+	}
+
+	public void setClic(Long clic) {
+		this.clic = clic;
+	}
+
 	public String getUrlShort() {
 		return urlShort;
 	}
